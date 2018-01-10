@@ -1,0 +1,58 @@
+<div>
+
+    <div id="bg"></div>
+
+    <div class="row container">
+
+        <div class="col l4 m4 s12 push-l4 push-m4">
+
+            <mat-toolbar  id="c">
+                <img class="logo" src="./assets/img/issuetracker_icon.png"> <span>ISSUE TRACKER</span>
+            </mat-toolbar>
+
+            <mat-card id="pane">
+
+                <form [formGroup]="form" class="f" (submit)="onSubmit(this.form.value)">
+
+                    <div class="row section">
+                        <div class="col l12 m12 s12">
+
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Email" [formControl]="emailFormControl"
+                                       [errorStateMatcher]="matcher">
+                                <mat-error
+                                        *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                                    Please enter a valid email address
+                                </mat-error>
+                                <mat-error *ngIf="emailFormControl.hasError('required')">
+                                    Email is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row section">
+                        <div class="col l12 m12 s12">
+                            <mat-form-field class="full-width">
+                                <input matInput placeholder="Enter your password" [type]="hide ? 'password' : 'text'" [formControl]="passFormControl">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row section">
+                        <div class="col l12 m12 s12">
+                            <button type="submit" class="full-width blue white-text" mat-raised-button>Login</button>
+                        </div>
+                    </div>
+
+                </form>
+            </mat-card>
+
+            <img id="bars" height="60px" width="80px" srcset="./assets/svg/Bars.svg" alt="loading..." [style.visibility]="showBars ? 'visible':'hidden'"  >
+
+        </div>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,52 @@
+#bg{
+    width:100%;
+    height: 100%;
+    position: absolute;
+    background-size: contain;
+    background : url("./../../assets/img/meetings_background2.jpg") no-repeat fixed;
+    z-index: -2;
+}
+
+#c{
+    margin-top: 30%;
+}
+
+#bars{
+    margin-left: 35%;
+}
+
+#pane{
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.logo{
+    height: 40px;
+    width: 40px;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+    background-color: #00acc1;
+}
+
+
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-container > * {
+    width: 100%;
+}
+
+.example-right-align {
+    text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+    display: none;
+}

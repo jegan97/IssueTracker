@@ -1,0 +1,28 @@
+<div class="row orange white-text " id="home">
+
+    <div class="col l1 m2 s4 center">
+        <img id="logo" srcset="./assets/img/issuetracker_icon.png" alt="logo"/>
+    </div>
+
+    <div class="col l9 m8 s6">
+        <p id="title">ISSUE TRACKER</p>
+    </div>
+
+    <div class="col l2 m2 s2 center center-block ">
+        <div class="row">
+            <i class="fa fa-2x fa-user-circle-o" aria-hidden="true"></i>
+        </div>
+        <div class="row">
+           <span> {{username}} </span>
+        </div>
+        <div class="row ">
+            <div class="col l12 m12 s12">
+                <button mat-button class="yellow-text "  (click)="logOut()">Logout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<router-outlet name="child"></router-outlet>
+
+<a *ngIf="show_fab" matTooltip="new event" mat-fab id="add" (click)="changeIcon()" [routerLink]="[{ outlets: { child: ['add'] } }]" [ngClass]="bg"><i class="fa" [ngClass]="icon" aria-hidden="true"></i></a>

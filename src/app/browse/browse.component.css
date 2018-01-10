@@ -1,0 +1,29 @@
+app-browse{
+    width:100%;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+}
+
+#filter-pane{
+    -webkit-box-shadow: 1px 0px 0px 1px rgba(224,224,224,1);
+    -moz-box-shadow: 1px 0px 0px 1px rgba(224,224,224,1);
+    box-shadow: 1px 0px 0px 1px rgba(224,224,224,1);
+}
+
+.event-card{
+    padding: 3% 2%;
+}
+
+.event-outer-card{
+    margin-bottom: 1%;
+    cursor: hand;
+    cursor: pointer;
+    transition: background-color 400ms;
+}
+.event-outer-card:hover{
+    background-color: rgb(244, 244, 244);
+}
+
+.mat-tab-label{
+    width:30%;
+}

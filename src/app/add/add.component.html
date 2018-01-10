@@ -1,0 +1,328 @@
+<mat-horizontal-stepper [linear]="true">
+
+    <mat-step [stepControl]="basic">
+        <form [formGroup]="basic">
+
+            <ng-template matStepLabel>Basic details</ng-template>
+
+
+            <div class="row section">
+                <div class="col l5 m6 s12 push-l3 push-m3">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Subject" [formControl]="subjectCtrl">
+                        <mat-error *ngIf="subjectCtrl.hasError('required')">
+                            * Subject is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row section">
+                <div class="col l5 m6 s12 push-l3 push-m3">
+                    <mat-form-field class="full-width">
+                        <textarea matInput placeholder="Description" [formControl]="descCtrl"></textarea >
+                        <mat-error *ngIf="descCtrl.hasError('required')">
+                            * Description is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row section">
+                <div class="col l5 m6 s12 push-l3 push-m3">
+                    <mat-form-field class="full-width">
+                        <mat-select placeholder="Choose Departments" [formControl]="deptCtrl" multiple>
+                            <mat-option *ngFor="let d of depts" [value]="d.value">{{d.name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="deptCtrl.hasError('required')">
+                            * Choose atleast <strong>one</strong> department
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row section">
+                <div class="col l5 m6 s12 push-l3 push-m3">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="spicker" placeholder="Start date" [formControl]="startCtrl" >
+                        <mat-datepicker-toggle matSuffix [for]="spicker"></mat-datepicker-toggle>
+                        <mat-datepicker #spicker></mat-datepicker>
+                        <mat-error *ngIf="startCtrl.hasError('required')">
+                            * Choose <strong>date</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row section">
+                <div class="col l5 m6 s12 push-l3 push-m3">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="dpicker" placeholder="Due date" [formControl]="dueCtrl">
+                        <mat-datepicker-toggle matSuffix [for]="dpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dpicker></mat-datepicker>
+
+                        <mat-error *ngIf="dueCtrl.hasError('required')">
+                            * Choose <strong>date</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <div *ngIf="basic.hasError('dateValidator') && basic.controls.due_date.touched && basic.controls.start_date.touched " style="font-size: small" class="red-text">
+                        * due date is behind start date
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row section">
+                <div class="col push-l7 push-m8">
+                    <button mat-raised-button class="green white-text" matStepperNext>Next</button>
+                </div>
+            </div>
+
+
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="members">
+        <form [formGroup]="members">
+            <ng-template matStepLabel>Choose people</ng-template>
+
+            <div class="row">
+                <div class="col l5 m6 s12 note orange lighten-5">
+                    <div class="row section">
+                        <strong>NOTE:</strong> <span>Choose atleast one member</span>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="selected_users.length==0" style="font-size: small" class="red-text">
+                * no member is chosen
+            </div>
+
+            <div class="space"></div>
+
+            <div class="row">
+                <div class="col l2 m2 s4">
+                    <strong class="section">Available Members</strong>
+                </div>
+            </div>
+
+            <div class="row section">
+                <div class="col col l4 m5 s8">
+                    <mat-form-field class="">
+                        <input matInput type="text" placeholder="Search.." (keyup)="filter()" [(ngModel)]="search"
+                               [ngModelOptions]="{standalone: true}"/>
+                        <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="search='';filter()">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div id="available-members">
+
+                <div class="row" *ngIf="users.length==0" id="nouser">
+                    <strong class="grey-text text-lighten-2">No users found</strong>
+                </div>
+
+                <div *ngIf="users.length>0" class="row">
+                    <div *ngFor="let u of users;let i=index" style="float: left;" (click)="selectUser(u,i)">
+                        <div class="row  orange lighten-5  z-depth-1 member-card section">
+                            <div class="col l3 m3 s3">
+                                <i class="fa fa-3x fa-user orange-text text-lighten-2 darken-2" aria-hidden="true"></i>
+                            </div>
+                            <div class="col l9 m9 s9 orange-text text-darken-3">
+                                <div class="row section">
+                                    <strong>{{u.username}}</strong>
+                                </div>
+
+                                <div class="row">
+                                    <span>{{u.department}}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="selected-members" class="section" *ngIf="selected_users.length>0">
+
+                <div class="row">
+                    <div class="col l6 m6 s6">
+                        <span><strong>Selected Members:</strong> (click to unselect)</span>
+                    </div>
+                    <div class="col l2 m2 s6 push-l4 push-m4">
+                        <strong>Total Selection: {{selected_users.length}}</strong>
+                    </div>
+                </div>
+
+
+                <div *ngFor="let u of selected_users;let i=index"
+                     class="row  green lighten-5 z-depth-1 member-card green-shadow section" style="float: left;"
+                     (click)="unselectUser(u.user,i)">
+                    <div class="col l3 m3 s3">
+                        <i class="fa fa-3x fa-user green-text " aria-hidden="true"></i>
+                    </div>
+                    <div class="col l9 m9 s9 green-text ">
+                        <div class="row section">
+                            <strong>{{u.user.username}}</strong>
+                        </div>
+                        <div class="row">
+                            <span>{{u.user.department}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div style="clear: both" class="row section">
+                <div class="col l1 m1 s2 push-l5 push-m5">
+                    <button mat-raised-button matStepperPrevious class="grey darken-1 white-text">Back</button>
+
+                </div>
+                <div class="col l1 m1 s2 push-l5 push-m5">
+                    <button mat-raised-button matStepperNext class="green white-text"
+                            [disabled]="selected_users.length==0" [class.grey]="selected_users.length==0">Next
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="members" #as>
+        <form [formGroup]="members">
+            <ng-template matStepLabel>Assign tasks</ng-template>
+
+            <div class="row">
+                <div class="col l5 m6 s12 note orange lighten-5">
+                    <div class="row section">
+                        <strong>NOTE:</strong> <span>The tasks assigned to members cannot be modified later</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row grey lighten-5">
+                <div class="row">
+                    <div class="col l8 m10 s12 push-l2 push-m2">
+                        <div class="row section">
+
+                            <div class="row section">
+                                <div class="col l6 m6 s6">
+                                    <strong> Member </strong>
+                                </div>
+                                <div class="col l6 m6 s6">
+                                    <strong> Task </strong>
+                                </div>
+                            </div>
+
+                            <div *ngFor="let u of selected_users">
+                                <div class="col l6 m6 s6">
+                                    <span> {{u.user.username+" [ "+u.user.department+" ] "}} </span>
+                                </div>
+                                <div class="col l6 m6 s6">
+                                    <mat-form-field class="full-width">
+                                        <textarea matInput matTextareaAutosize placeholder="write task"
+                                                  [(ngModel)]="u.task" [ngModelOptions]="{standalone: true}"></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="clear: both" class="row section">
+                <div class="col l1 m1 s2 push-l5 push-m5">
+                    <button mat-raised-button matStepperPrevious class="grey darken-1 white-text">Back</button>
+
+                </div>
+                <div class="col l1 m1 s2 push-l5 push-m5">
+                    <button mat-raised-button matStepperNext class="green white-text">Next</button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+
+
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+
+        <div class="row orange lighten-5 section container">
+            <div class="col l2 m2 s4">
+                <strong>Event Details</strong>
+            </div>
+        </div>
+
+        <div class="space"></div>
+        <div class="row grey lighten-5 container">
+            <div class="row section">
+                <div class="col l2 m2 s6 push-l1 push-m1 push-s1">
+                    <strong>Subject</strong>
+                </div>
+                <div class="col l2 m2 s6 push-l5 push-m5 push-s6">
+                    {{subjectCtrl.value}}
+                </div>
+            </div>
+            <div class="row section">
+                <div class="col l2 m2 s6 push-l1 push-m1 push-s1">
+                    <strong>Description</strong>
+                </div>
+                <div class="col l2 m2 s6 push-l5 push-m5 push-s6">
+                    {{descCtrl.value}}
+                </div>
+            </div>
+
+            <div class="row section">
+                <div class="col l3 m3 s3 push-l1 push-m1 push-s1">
+                    <strong>Departments Associated</strong>
+                </div>
+                <div class="col l6 m6 s9 push-l3 push-m3 push-s3">
+                    <mat-chip-list>
+                        <mat-chip style="width: 150px; margin: 5px" color="warn" *ngFor="let d of deptCtrl.value">
+                            <span>{{depts[d.id-1].name}}</span>
+                        </mat-chip>
+                    </mat-chip-list>
+                </div>
+            </div>
+
+            <div class="row section">
+                <div class="col l3 m3 s3 push-l1 push-m1 push-s1">
+                    <strong>Member</strong>
+                </div>
+                <div class="col l2 m2 s6 push-l5 push-m5 push-s6">
+                    <strong>Task</strong>
+                </div>
+            </div>
+
+            <div class="row section ">
+                <div class="row section" *ngFor="let m of selected_users">
+                    <div class="col l3 m3 s3 push-l1 push-m1 push-s1">
+                        <span>{{m.user.username}}</span>
+                    </div>
+                    <div class="col l4 m4 s6 push-l3 push-m3 push-s3 top-down-margin wrap-word">
+                        <span>{{m.task}}</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div style="clear: both" class="row section">
+            <div class="col l1 m1 s2 push-l5 push-m5">
+                <button mat-raised-button matStepperPrevious class="grey darken-1 white-text">Back</button>
+            </div>
+            <div class="col l1 m1 s2 push-l5 push-m5">
+                <button mat-raised-button matStepperNext class="green white-text" (click)="createEvent()">Save and
+                    Create
+                </button>
+            </div>
+        </div>
+    </mat-step>
+
+</mat-horizontal-stepper>

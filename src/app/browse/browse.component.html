@@ -1,0 +1,185 @@
+<div class="row">
+
+    <div class="col l2 m2 nopadding" id="filter-pane">
+
+        <div style="font-size: small">
+            <div class="row center-align">
+                <div class="space"></div>
+                <strong>Filters</strong>
+
+                <div class="space"></div>
+
+            </div>
+            <div class="divider"></div>
+            <div class="space"></div>
+            <form class="row">
+                <strong>Date</strong>
+
+                <div class="space"></div>
+
+                <div class="row">
+                    <mat-form-field class="full-width">
+                        <input matInput [matDatepicker]="spicker" placeholder="Start date" [formControl]="startCtrl">
+                        <mat-datepicker-toggle matSuffix [for]="spicker"></mat-datepicker-toggle>
+                        <mat-datepicker #spicker></mat-datepicker>
+
+                    </mat-form-field>
+                </div>
+                <div class="space"></div>
+                <div class="row">
+                    <mat-form-field class="full-width">
+                        <input matInput [matDatepicker]="dpicker" placeholder="Due date" [formControl]="dueCtrl">
+                        <mat-datepicker-toggle matSuffix [for]="dpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #dpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </form>
+
+            <div class="divider"></div>
+            <div class="space"></div>
+
+            <form class="row">
+                <strong>Status</strong>
+
+                <div class="space"></div>
+
+                <div class="row">
+                    <mat-checkbox color="warn">New</mat-checkbox>
+                </div>
+                <div class="row">
+                    <mat-checkbox color="warn">In Progress</mat-checkbox>
+
+                </div>
+                <div class="row">
+                    <mat-checkbox color="warn">Completed</mat-checkbox>
+                </div>
+                <div class="space"></div>
+
+            </form>
+
+            <div class="divider"></div>
+            <div class="space"></div>
+
+            <form class="row">
+                <strong>Department</strong>
+
+                <div class="space"></div>
+
+                <div>
+                    <div class="row" *ngFor="let d of depts">
+                        <mat-checkbox color="warn" [value]="d.value">{{d.name}}</mat-checkbox>
+                    </div>
+                </div>
+                <div class="space"></div>
+
+            </form>
+            <div class="space"></div>
+
+        </div>
+
+    </div>
+
+    <div class="col l10 m10">
+
+        <div class="row">
+
+            <div class="col l1 m1">
+                <button mat-button color="warn" class="deep-orange-text">Apply filters</button>
+            </div>
+
+            <div class="col l1 m1">
+                <button mat-button color="warn" class="deep-orange-text">Reset filters</button>
+            </div>
+
+            <div class="col l5 m6 push-l3 push-m2">
+                <mat-form-field class="full-width">
+                    <input type="text" matInput placeholder="Search...">
+                </mat-form-field>
+
+            </div>
+
+            <div class="col l1 m1 push-l3 push-m2">
+                <div class="space"></div>
+                <button mat-button color="warn">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+
+        </div>
+        <div class="space"></div>
+
+        <div class="row">
+            <mat-tab-group>
+                <mat-tab >
+                    <ng-template mat-tab-label >
+                        <strong >My events</strong>
+                    </ng-template>
+                    <div class="row" *ngFor="let e of events;let i=index">
+                        <mat-card class="col l9 m10 s12 push-l1 push-m1 event-outer-card" (click)="openEvent(i)">
+                            <div class="event-card">
+                                <div class="row">
+                                    <div class="col l10 m10 s10">
+                                        <h3 class="deep-orange-text wrap-word">{{e.name}}</h3>
+
+                                        <p class="grey-text text-darken-2 wrap-word">{{e.description}}</p>
+
+                                        <div class="space"></div>
+                                    </div>
+                                    <div class="l1 m1">
+                                        <span class="blue-grey-text"><i class="fa fa-users"
+                                                                        aria-hidden="true"></i> <strong>{{e.members.length}}</strong></span>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="space"></div>
+                                <div class="row">
+                                    <div class="col l10 m10 s10">
+                                        <span class="blue-grey-text"><strong>Due on: </strong>{{e.due_date | date:'fullDate'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </mat-tab>
+
+                <mat-tab>
+
+                    <ng-template mat-tab-label >
+                        <strong >Invited events</strong>
+                    </ng-template>
+
+                    <div class="row" *ngFor="let e of ievents;let i=index">
+                        <mat-card class="col l9 m10 s12 push-l1 push-m1 event-outer-card" (click)="openIevent(i)">
+                            <div class="event-card">
+                                <div class="row">
+                                    <div class="col l10 m10 s10">
+                                        <h3 class="deep-orange-text wrap-word">{{e.name}}</h3>
+
+                                        <p class="grey-text text-darken-2 wrap-word">{{e.description}}</p>
+
+                                        <div class="space"></div>
+                                    </div>
+                                    <div class="l1 m1">
+                                        <span class="blue-grey-text"><i class="fa fa-users"
+                                                                        aria-hidden="true"></i> <strong>{{e.members.length}}</strong></span>
+                                    </div>
+                                </div>
+                                <div class="divider"></div>
+                                <div class="space"></div>
+                                <div class="row">
+                                    <div class="col l10 m10 s10">
+                                        <span class="blue-grey-text"><strong>Due on: </strong>{{e.due_date | date:'fullDate'}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+
+    </div>
+
+
+</div>

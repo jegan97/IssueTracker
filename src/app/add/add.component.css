@@ -1,0 +1,46 @@
+app-add{
+    width:100%;
+}
+
+
+#s{
+    border: 1px solid rgba(11, 19, 28, 1);
+}
+
+.member-card{
+    height: 5rem;
+    width: 14rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    cursor: hand;
+    word-wrap: break-word;
+    -webkit-box-shadow: 0px 0px 15px -4px rgba(217,148,28,1);
+    -moz-box-shadow: 0px 0px 15px -4px rgba(217,148,28,1);
+    box-shadow: 0px 0px 15px -4px rgba(217,148,28,1);
+}
+
+.green-shadow{
+    -webkit-box-shadow: 0px 0px 15px -4px rgba(54,130,43,1);
+    -moz-box-shadow: 0px 0px 15px -4px rgba(54,130,43,1);
+    box-shadow: 0px 0px 15px -4px rgba(54,130,43,1);
+}
+
+#available-members{
+    max-height: 20rem;
+    min-width: 100%;
+    overflow-y: scroll;
+}
+#nouser{
+    font-size: 2rem;
+    margin-left: 20%;
+    margin-top: 1%;
+}
+
+#selected-members{
+    clear: both;
+}
+
+.note{
+    border-left: 1rem solid orangered;
+}
