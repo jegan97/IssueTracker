@@ -4,7 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+change outDir in angular.cli file to specify the build output directory ( wamp/www/"projectfolder")
+update last line in .htaccess file with same "projectfolder" (replacing update-prod)
+use build command to host the project 
 
 ## Code scaffolding
 
